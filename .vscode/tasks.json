@@ -1,0 +1,101 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "questionNumber",
+            "type": "promptString",
+            "description": "Enter the 3-digit question number to start (e.g., 001, 002):",
+            "default": "001"
+        }
+    ],
+    "tasks": [
+        {
+            "label": "1. Windows Setup (Install WSL/Docker)",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                ".\\setup\\setup.ps1"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "2. Linux Setup (Install Kind/Kubectl/Python in WSL)",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-d",
+                "Debian",
+                "--",
+                "bash",
+                "./setup/setup.sh"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "3. Start Question",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-d",
+                "Debian",
+                "--",
+                "python3",
+                "./start.py",
+                "start",
+                "${input:questionNumber}"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "4. Verify Active Solution",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-d",
+                "Debian",
+                "--",
+                "python3",
+                "./start.py",
+                "verify"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "5. Delete Practice Cluster",
+            "type": "shell",
+            "command": "wsl",
+            "args": [
+                "-d",
+                "Debian",
+                "--",
+                "python3",
+                "./start.py",
+                "delete"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "terminal.integrated.defaultProfile.windows": "Debian (WSL)",
+    "terminal.integrated.profiles.windows": {
+        "Debian (WSL)": {
+            "path": "wsl.exe",
+            "args": [
+                "-d",
+                "Debian"
+            ]
+        }
+    },
+    "files.eol": "\n",
+    "files.trimTrailingWhitespace": true
+}
